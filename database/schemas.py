@@ -29,6 +29,7 @@ class ClueCreate(ClueBase):
 class Clue(ClueBase):
     id: int
     number: int
+    released: bool
 
     class Config:
         orm_mode = True
@@ -44,6 +45,7 @@ class DetectiveCreate(DetectiveBase):
 
 class Detective(DetectiveBase):
     id: int
+    latest_puzzle_number_solved: int
 
     class Config:
         orm_mode = True

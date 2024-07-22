@@ -65,6 +65,10 @@ async def post_clue(clue: schemas.ClueCreate, db: Session = Depends(get_db)):
 async def get_detectives(db: Session = Depends(get_db)):
     return crud.get_detectives(db)
 
+@app.get("/detective/{detective_code}", response_model=schemas.Detective)
+async def get_detective(detective_code: str, db: Session = Depends(get_db)):
+    return crud.get_detective_by_code(db, code=detective_code)
+
 @app.post("/detective/", response_model=schemas.Detective)
 async def post_detective(detective: schemas.DetectiveCreate, db: Session = Depends(get_db)):
     created_detective = crud.create_detective(db, detective)
@@ -75,7 +79,7 @@ class Vote(BaseModel):
     detective_code: str
 
 @app.post("/clue_v2/{clue_id}/vote/")
-async def test_post_vote(clue_id: str, vote: Vote, db: Session = Depends(get_db)):
+async def post_vote(clue_id: str, vote: Vote, db: Session = Depends(get_db)):
     detective = crud.get_detective_by_code(db, code=vote.detective_code)
     if vote.suspect not in suspects.all_suspects:
         raise HTTPException(status_code=400, detail="suspect not found")
