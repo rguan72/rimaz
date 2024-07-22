@@ -24,6 +24,14 @@ def create_vote(db: Session, vote: schemas.VoteCreate):
 def get_clues(db: Session):
     return db.query(models.Clue).all()
 
+def get_clue(db: Session, clue_id: int):
+    return db.query(models.Clue).filter(models.Clue.id == clue_id).one()
+
+def update_clue(db: Session, id: int, clue: schemas.ClueCreate):
+    db.query(models.Clue).filter(models.Clue.id == id).update(clue.model_dump())
+    db.commit()
+    return get_clue(db, id)
+
 def create_clue(db: Session, clue: schemas.ClueCreate):
     db_clue = models.Clue(number=clue.number)
     db.add(db_clue)

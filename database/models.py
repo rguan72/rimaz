@@ -23,6 +23,7 @@ class Detective(Base):
     id = Column(Integer, primary_key=True)
     code = Column(String, unique=True)
     name = Column(String)
+    latest_puzzle_number_solved = Column(Integer, default=0)
 
     vote = relationship("Vote", back_populates="detective")
 
@@ -31,5 +32,6 @@ class Clue(Base):
 
     id = Column(Integer, primary_key=True)
     number = Column(Integer, unique=True)
+    released = Column(Boolean, default=False)
 
     vote = relationship("Vote", back_populates="clue")

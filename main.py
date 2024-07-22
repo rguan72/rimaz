@@ -14,7 +14,6 @@ from database import crud, models, schemas
 from database.database import SessionLocal, engine
 
 load_dotenv()
-models.Base.metadata.create_all(bind=engine)
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
@@ -45,11 +44,6 @@ async def trigger():
     time.sleep(1)
     smart_plugs.turn_all_lights_off()
 
-@app.get("/clue/{clue_id}/vote_results/")
-async def get_poll_results(clue_id: str):
-    print(clue_id)
-    return {"richard": 2, "maha": 4, "noah": 1}
-
 @app.get("/clue_v2/{clue_id}/vote_results/")
 async def get_poll_results(clue_id: str, db: Session = Depends(get_db)):
     votes = crud.get_votes_by_clue_id(db, clue_id)
@@ -79,10 +73,6 @@ async def post_detective(detective: schemas.DetectiveCreate, db: Session = Depen
 class Vote(BaseModel):
     suspect: str
     detective_code: str
-
-@app.post("/clue/{clue_id}/vote/")
-async def post_vote(clue_id: str, vote: Vote, db: Session = Depends(get_db)):
-    return vote
 
 @app.post("/clue_v2/{clue_id}/vote/")
 async def test_post_vote(clue_id: str, vote: Vote, db: Session = Depends(get_db)):
