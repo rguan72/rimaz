@@ -20,7 +20,6 @@ load_dotenv()
 # smart_plugs.turn_all_lights_off()
 
 # speakers.list_audio_devices()
-speakers.set_device_by_name("JBL")
 smart_plugs.turn_all_lights_off()
 smart_plugs.turn_all_lights_on()
 speakers.play_clue_solved_sound_effect()
