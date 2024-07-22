@@ -26,3 +26,6 @@ smart_plugs.turn_all_lights_on()
 speakers.play_clue_solved_sound_effect()
 time.sleep(1)
 smart_plugs.turn_all_lights_off()
+
+# print(smart_plugs.get_lights())
+# smart_plugs.turn_all_lights_off()
