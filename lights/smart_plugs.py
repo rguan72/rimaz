@@ -9,7 +9,7 @@ def control_smart_plug(light_id, state):
     payload = {
         "on": state
     }
-    response = requests.put(f'http://{constants.bridge_ip}/api/{constants.username}/lights/{light_id}/state', json=payload)``
+    response = requests.put(f'http://{constants.bridge_ip}/api/{constants.username}/lights/{light_id}/state', json=payload)
     return response.json()
 
 def control_all_lights(state):
