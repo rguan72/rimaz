@@ -23,7 +23,6 @@ class Detective(Base):
     id = Column(Integer, primary_key=True)
     code = Column(String, unique=True)
     name = Column(String)
-    latest_puzzle_number_solved = Column(Integer, default=0)
 
     vote = relationship("Vote", back_populates="detective")
 
@@ -35,3 +34,12 @@ class Clue(Base):
     released = Column(Boolean, default=False)
 
     vote = relationship("Vote", back_populates="clue")
+
+class DetectiveClueLink(Base):
+    __tablename__ = "detective_clue_link"
+
+    id = Column(Integer, primary_key=True)
+    detective_id = Column(Integer, ForeignKey("detective.id"))
+    clue_id = Column(Integer, ForeignKey("clue.id"))
+    solved = Column(Boolean, default=True)
+    voted = Column(Boolean, default=False)

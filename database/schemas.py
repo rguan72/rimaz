@@ -45,7 +45,21 @@ class DetectiveCreate(DetectiveBase):
 
 class Detective(DetectiveBase):
     id: int
-    latest_puzzle_number_solved: int
+
+    class Config:
+        orm_mode = True
+
+class DetectiveClueLinkBase(BaseModel):
+    clue_id: int
+    detective_id: int
+    solved: bool
+    voted: bool
+
+class DetectiveClueLinkCreate(DetectiveClueLinkBase):
+    pass
+
+class DetectiveClueLink(DetectiveClueLinkBase):
+    id: int
 
     class Config:
         orm_mode = True
