@@ -38,7 +38,7 @@ def get_db():
 
 async def scheduled_task():
     # Create a new session
-    async_session = get_db()
+    async_session = SessionLocal()
     clue_engine.release_clue_loop(async_session)
 
 scheduler = AsyncIOScheduler()

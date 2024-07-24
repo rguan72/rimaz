@@ -19,6 +19,7 @@ class Vote(VoteBase):
 
 class ClueBase(BaseModel):
     number: int
+    released: bool
 
 
 class ClueCreate(ClueBase):
@@ -27,8 +28,6 @@ class ClueCreate(ClueBase):
 
 class Clue(ClueBase):
     id: int
-    number: int
-    released: bool
 
     class Config:
         orm_mode = True
