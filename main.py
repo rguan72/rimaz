@@ -8,7 +8,12 @@ from sqlalchemy.orm import Session
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from common import suspects
+from sqlalchemy.ext.asyncio import AsyncSession
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from apscheduler.triggers.interval import IntervalTrigger
 from common import constants
+from datetime import datetime
+import contextlib
 
 from database import crud, models, schemas
 from database.database import SessionLocal, engine
@@ -31,7 +36,18 @@ def get_db():
     finally:
         db.close()
 
-# LED light control + also project in projector
+async def scheduled_task():
+    # Create a new session
+    async_session = get_db()
+    clue_engine.release_clue_loop(async_session)
+
+scheduler = AsyncIOScheduler()
+scheduler.add_job(scheduled_task, IntervalTrigger(seconds=5))  # Schedule task every 10 seconds for demonstration
+scheduler.start()
+
+@app.on_event("shutdown")
+async def shutdown_event():
+    scheduler.shutdown()
 
 @app.get("/")
 async def root():
