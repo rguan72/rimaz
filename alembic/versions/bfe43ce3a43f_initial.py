@@ -1,8 +1,8 @@
-"""Initial migration
+"""initial
 
-Revision ID: e0e851ab1bd3
+Revision ID: bfe43ce3a43f
 Revises: 
-Create Date: 2024-07-22 00:47:24.119029
+Create Date: 2024-07-23 19:39:18.610491
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = 'e0e851ab1bd3'
+revision: str = 'bfe43ce3a43f'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -31,19 +31,16 @@ def upgrade() -> None:
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('code', sa.String(), nullable=True),
     sa.Column('name', sa.String(), nullable=True),
-    sa.Column('latest_puzzle_number_solved', sa.Integer(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('code')
     )
     op.create_table('vote',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('detective_id', sa.Integer(), nullable=True),
-    sa.Column('clue_id', sa.Integer(), nullable=True),
     sa.Column('suspect', sa.String(), nullable=True),
-    sa.ForeignKeyConstraint(['clue_id'], ['clue.id'], ),
     sa.ForeignKeyConstraint(['detective_id'], ['detective.id'], ),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('clue_id', 'detective_id', name='__clue_id_detective_id_uc')
+    sa.UniqueConstraint('detective_id')
     )
     # ### end Alembic commands ###
 

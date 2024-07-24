@@ -2,7 +2,6 @@ from pydantic import BaseModel
 
 
 class VoteBase(BaseModel):
-    clue_id: int
     detective_id: int
     suspect: str
 
@@ -44,21 +43,6 @@ class DetectiveCreate(DetectiveBase):
 
 
 class Detective(DetectiveBase):
-    id: int
-
-    class Config:
-        orm_mode = True
-
-class DetectiveClueLinkBase(BaseModel):
-    clue_id: int
-    detective_id: int
-    solved: bool
-    voted: bool
-
-class DetectiveClueLinkCreate(DetectiveClueLinkBase):
-    pass
-
-class DetectiveClueLink(DetectiveClueLinkBase):
     id: int
 
     class Config:

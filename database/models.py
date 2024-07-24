@@ -8,14 +8,10 @@ class Vote(Base):
     __tablename__ = "vote"
 
     id = Column(Integer, primary_key=True)
-    detective_id = Column(Integer, ForeignKey("detective.id"))
-    clue_id = Column(Integer, ForeignKey("clue.id"))
+    detective_id = Column(Integer, ForeignKey("detective.id"), unique=True)
     suspect = Column(String)
 
     detective = relationship("Detective", back_populates="vote")
-    clue = relationship("Clue", back_populates="vote")
-    __table_args__ = (UniqueConstraint("clue_id", "detective_id", name="__clue_id_detective_id_uc"),)
-
 
 class Detective(Base):
     __tablename__ = "detective"
@@ -32,14 +28,3 @@ class Clue(Base):
     id = Column(Integer, primary_key=True)
     number = Column(Integer, unique=True)
     released = Column(Boolean, default=False)
-
-    vote = relationship("Vote", back_populates="clue")
-
-class DetectiveClueLink(Base):
-    __tablename__ = "detective_clue_link"
-
-    id = Column(Integer, primary_key=True)
-    detective_id = Column(Integer, ForeignKey("detective.id"))
-    clue_id = Column(Integer, ForeignKey("clue.id"))
-    solved = Column(Boolean, default=True)
-    voted = Column(Boolean, default=False)
