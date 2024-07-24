@@ -45,6 +45,9 @@ def get_detectives(db: Session):
 def get_detective_by_code(db: Session, code: str):
     return db.query(models.Detective).filter(models.Detective.code == code).one()
 
+def maybe_get_detective_by_name(db: Session, name: str):
+    return db.query(models.Detective).filter(models.Detective.name == name).one_or_none()
+
 def create_detective(db: Session, detective: schemas.DetectiveCreate):
     db_detective = models.Detective(code=detective.code, name=detective.name)
     db.add(db_detective)

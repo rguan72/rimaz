@@ -72,7 +72,11 @@ async def get_detective(detective_code: str, db: Session = Depends(get_db)):
 
 @app.post("/detective/", response_model=schemas.Detective)
 async def post_detective(detective: schemas.DetectiveCreate, db: Session = Depends(get_db)):
-    return crud.create_detective(db, detective)
+    maybe_detective = crud.maybe_get_detective_by_name(db, detective.name)
+    if maybe_detective == None:
+        return crud.create_detective(db, detective)
+    else:
+        return maybe_detective
 
 @app.post("/vote/", response_model=schemas.Vote)
 async def post_vote(vote: schemas.VoteCreate, db: Session = Depends(get_db)):

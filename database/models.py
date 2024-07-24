@@ -18,7 +18,7 @@ class Detective(Base):
 
     id = Column(Integer, primary_key=True)
     code = Column(String, unique=True)
-    name = Column(String)
+    name = Column(String, unique=True)
 
     vote = relationship("Vote", back_populates="detective")
 
