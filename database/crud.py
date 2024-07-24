@@ -6,13 +6,13 @@ from . import models, schemas
 def get_votes(db: Session):
     return db.query(models.Vote).all()
 
-def get_vote_by_clue_id_and_detective_id(db: Session, clue_id: str, detective_id: int):
+def maybe_get_vote_by_detective_id(db: Session, detective_id: int):
     return db.query(models.Vote).filter(models.Vote.detective_id == detective_id).one_or_none()
 
-def update_vote_by_clue_id_and_detective_id(db: Session, clue_id: str, detective_id: int, vote: schemas.VoteCreate):
+def update_vote_detective_id(db: Session, detective_id: int, vote: schemas.VoteCreate):
     db.query(models.Vote).filter(models.Vote.detective_id == detective_id).update(vote.model_dump())
     db.commit()
-    return get_vote_by_clue_id_and_detective_id(db, clue_id, detective_id)
+    return maybe_get_vote_by_detective_id(db, detective_id)
 
 def create_vote(db: Session, vote: schemas.VoteCreate):
     db_vote = models.Vote(detective_id=vote.detective_id, suspect=vote.suspect)

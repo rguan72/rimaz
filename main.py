@@ -78,5 +78,8 @@ async def post_detective(detective: schemas.DetectiveCreate, db: Session = Depen
 async def post_vote(vote: schemas.VoteCreate, db: Session = Depends(get_db)):
     if vote.model_dump()['suspect'] not in suspects.all_suspects:
         raise HTTPException(status_code=400, detail="suspect must be one of: " + ", ".join(suspects.all_suspects))
-    created_vote = crud.create_vote(db, vote)
-    return created_vote
+    if crud.maybe_get_vote_by_detective_id(db, vote.detective_id) == None:
+        vote = crud.create_vote(db, vote)
+    else:
+        vote = crud.update_vote_detective_id(db, vote.detective_id, vote)
+    return vote
