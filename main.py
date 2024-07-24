@@ -103,3 +103,8 @@ async def post_vote(vote: schemas.VoteCreate, db: Session = Depends(get_db)):
     else:
         vote = crud.update_vote_detective_id(db, vote.detective_id, vote)
     return vote
+
+@app.get("/detective/{detective_code}/vote", response_model=schemas.Vote | None)
+async def get_vote(detective_code: str, db: Session = Depends(get_db)):
+    detective = crud.get_detective_by_code(db, code=detective_code)
+    return crud.maybe_get_vote_by_detective_id(db, detective_id=detective.id)
