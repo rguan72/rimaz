@@ -21,7 +21,7 @@ from clueengine import side_effects
 
 load_dotenv()
 
-side_effects.clue_1_side_effects()
+side_effects.clue_3_side_effects()
 
 # smart_plugs.set_lightbulb_effect(4, "colorloop")
 # print(smart_plugs.get_lights())
