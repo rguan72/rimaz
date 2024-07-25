@@ -29,3 +29,15 @@ def play_mp3(file_path):
 
 def play_clue_solved_sound_effect():
     play_mp3("sounds/assets/clue_solved.mp3")
+
+# Parameters for the inaudible sound
+duration = 0.5  # seconds
+frequency = 20  # Hz, low-frequency sound
+sample_rate = 44100  # samples per second
+
+def play_inaudible_sound():
+    t = np.linspace(0, duration, int(sample_rate * duration), endpoint=False)
+    audio_signal = 0.001 * np.sin(2 * np.pi * frequency * t)  # Very low amplitude signal
+    sd.default.device = "JBL Charge 3"
+    sd.play(audio_signal, sample_rate)
+    sd.wait()

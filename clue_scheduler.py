@@ -1,5 +1,6 @@
 from database.database import SessionLocal
 from clueengine import engine as clue_engine
+from sounds import speakers
 import sys
 import time
 
@@ -8,7 +9,7 @@ from sqlalchemy.orm import Session
 
 while True:
     try:
-        print(".", end="")
+        speakers.play_inaudible_sound()
         with SessionLocal() as db:
             clue_engine.release_clue_loop(db)
     except Exception as e:
