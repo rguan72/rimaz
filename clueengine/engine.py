@@ -7,22 +7,27 @@ clue_1_release_time = 2200
 clue_2_release_time = 2230
 clue_3_release_time = 2300
 clue_4_release_time = 2330
+final_reveal_time = 2335
 
 def release_clue_loop(db: Session):
     current_local_time = datetime.now()
+    hhmm = serialize_time(current_local_time)
+    if hhmm >= final_reveal_time:
+        side_effects.final_side_effects()
+        return "end"
     clue_to_try_release = get_clue_to_release(current_local_time)
     if clue_to_try_release:
         release_clue(db, clue_to_try_release)
     
 def get_clue_to_release(localtime: datetime):
-    hhmm = localtime.hour * 100 + localtime.minute
+    hhmm = serialize_time(localtime)
     if hhmm >= clue_1_release_time and hhmm < clue_2_release_time:
         return 1
     elif hhmm >= clue_2_release_time and hhmm < clue_3_release_time:
         return 2
     elif hhmm >= clue_3_release_time and hhmm < clue_4_release_time:
         return 3
-    elif hhmm >= clue_4_release_time:
+    elif hhmm >= clue_4_release_time and hhmm < final_reveal_time:
         return 4
     return None
 
@@ -40,3 +45,6 @@ def release_clue(db: Session, clue_id: int):
     elif int(clue_id) == 4:
         side_effects.clue_4_side_effects()
     return result
+
+def serialize_time(localtime: datetime):
+    return localtime.hour * 100 + localtime.minute

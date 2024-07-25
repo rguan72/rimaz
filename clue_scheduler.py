@@ -11,7 +11,8 @@ while True:
     try:
         speakers.play_inaudible_sound()
         with SessionLocal() as db:
-            clue_engine.release_clue_loop(db)
+            if clue_engine.release_clue_loop(db) == "end":
+                sys.exit(0)
     except Exception as e:
         print(f"An error occurred: {e}")
     finally:

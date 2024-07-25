@@ -35,3 +35,11 @@ def clue_4_side_effects():
     smart_plugs.set_all_lightbulbs_color(constants.dark_red.hue, constants.dark_red.sat, constants.dark_red.bri)
     time.sleep(constants.lighting_affect_seconds)
     setup_default()
+
+
+def final_side_effects():
+    smart_plugs.turn_all_lights_off()
+    time.sleep(10)
+    smart_plugs.set_all_lightbulbs_color(constants.magenta.hue, constants.magenta.sat, constants.magenta.bri)
+    time.sleep(10)
+    setup_default()

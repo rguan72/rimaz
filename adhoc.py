@@ -22,7 +22,7 @@ from clueengine import side_effects
 load_dotenv()
 
 # smart_plugs.set_lightbulb_effect(4, "colorloop")
-# print(smart_plugs.get_lights())
+print(smart_plugs.get_lights())
 # # smart_plugs.turn_all_lights_off()
 # print(smart_plugs.get_lights())
 # # smart_plugs.turn_all_lights_on()
@@ -45,7 +45,7 @@ load_dotenv()
 # smart_plugs.turn_all_lights_off()
 
 # smart_plugs.light_effect()
-smart_plugs.turn_all_smart_plugs_off()
-time.sleep(3)
-smart_plugs.turn_all_smart_plugs_on()
+# smart_plugs.turn_all_smart_plugs_off()
+# time.sleep(3)
+# smart_plugs.turn_all_smart_plugs_on()
 
