@@ -25,18 +25,40 @@ def turn_all_lights_on():
 def turn_all_lights_off():
     control_all_lights(False)
 
-def light_effect():
+def turn_all_smart_plugs_off():
+    lights = get_lights()
+    for id, body in lights.items():
+        is_plug = "Hue smart plug" in body["productname"]
+        if is_plug:
+            control_light(id, False)
+
+def turn_all_smart_plugs_on():
+    lights = get_lights()
+    for id, body in lights.items():
+        is_plug = "Hue smart plug" in body["productname"]
+        if is_plug:
+            control_light(id, True)
+
+def remove_all_lightbulbs_effects():
     lights = get_lights()
     for id, body in lights.items():
         is_lightbulb = "Hue color" in body["productname"]
         if is_lightbulb:
-            set_lightbulb_color(id, 60, 100, 100)
-            time.sleep(1)
-            control_light(id, False)
-            time.sleep(1)
-            control_light(id, True)
-            time.sleep(1)
-            control_light(id, False)
+            set_lightbulb_effect(id, "none")
+
+def set_all_lightbulbs_color(hue, sat, bri):
+    lights = get_lights()
+    for id, body in lights.items():
+        is_lightbulb = "Hue color" in body["productname"]
+        if is_lightbulb:
+            set_lightbulb_color(id, hue, sat, bri)
+
+def set_all_lightbulbs_effect(effect):
+    lights = get_lights()
+    for id, body in lights.items():
+        is_lightbulb = "Hue color" in body["productname"]
+        if is_lightbulb:
+            set_lightbulb_effect(id, effect)
 
 def set_lightbulb_color(light_id, hue, sat, bri, transitiontime=0):
     payload = {
@@ -45,6 +67,14 @@ def set_lightbulb_color(light_id, hue, sat, bri, transitiontime=0):
         'sat': sat,
         'bri': bri,
         'transitiontime': transitiontime,
+    }
+    response = requests.put(f"http://{constants.bridge_ip}/api/{constants.username}/lights/{light_id}/state", json=payload)
+    return response.json()
+
+def set_lightbulb_effect(light_id, effect):
+    payload = {
+        "on": True,
+        'effect': effect
     }
     response = requests.put(f"http://{constants.bridge_ip}/api/{constants.username}/lights/{light_id}/state", json=payload)
     return response.json()

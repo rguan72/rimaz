@@ -17,9 +17,13 @@ from common import constants
 
 from database import crud, models, schemas
 from database.database import SessionLocal, engine
+from clueengine import side_effects
 
 load_dotenv()
 
+side_effects.clue_1_side_effects()
+
+# smart_plugs.set_lightbulb_effect(4, "colorloop")
 # print(smart_plugs.get_lights())
 # # smart_plugs.turn_all_lights_off()
 # print(smart_plugs.get_lights())

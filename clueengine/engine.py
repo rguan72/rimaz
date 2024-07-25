@@ -1,6 +1,7 @@
 from database import crud, models, schemas
 from sqlalchemy.orm import Session
 from datetime import datetime
+from clueengine import side_effects
 
 clue_1_release_time = 2200
 clue_2_release_time = 2230
@@ -29,4 +30,12 @@ def release_clue(db: Session, clue_id: int):
     db_clue = crud.get_clue(db, clue_id)
     if db_clue.released:
         return
+    if clue_id == 1:
+        side_effects.clue_1_side_effects()
+    elif clue_id == 2:
+        side_effects.clue_2_side_effects()
+    elif clue_id == 3:
+        side_effects.clue_3_side_effects()
+    elif clue_id == 4:
+        side_effects.clue_4_side_effects()
     return crud.update_clue(db, clue_id, schemas.ClueCreate(number=db_clue.number, released=True))
