@@ -9,4 +9,4 @@ dark_red = Color(102, 252, 254)
 deep_blue = Color(44259, 254, 254)
 pink = Color(51326, 126, 254)
 default = Color(8811, 98, 254)
-lighting_affect_seconds = 120
+lighting_affect_seconds = 60

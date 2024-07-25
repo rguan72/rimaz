@@ -3,10 +3,10 @@ from sqlalchemy.orm import Session
 from datetime import datetime
 from clueengine import side_effects
 
-clue_1_release_time = 2000
-clue_2_release_time = 2005
-clue_3_release_time = 2010
-clue_4_release_time = 2015
+clue_1_release_time = 2200
+clue_2_release_time = 2230
+clue_3_release_time = 2300
+clue_4_release_time = 2330
 
 def release_clue_loop(db: Session):
     current_local_time = datetime.now()
