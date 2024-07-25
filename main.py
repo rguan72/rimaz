@@ -33,11 +33,6 @@ def get_db():
     finally:
         db.close()
 
-async def scheduled_task():
-    # Create a new session
-    async_session = SessionLocal()
-    clue_engine.release_clue_loop(async_session)
-
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
