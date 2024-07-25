@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect, Request
 from dotenv import load_dotenv
 from lights import smart_plugs as smart_plugs
 from sounds import speakers as speakers
@@ -8,6 +8,7 @@ from sqlalchemy.orm import Session
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from common import suspects
+import asyncio
 
 from database import crud, schemas
 from database.database import SessionLocal
@@ -22,6 +23,8 @@ app.add_middleware(
     allow_methods=["*"],  # Allows all methods
     allow_headers=["*"],  # Allows all headers
 )
+
+connected_clients = []
 
 def get_db():
     db = SessionLocal()
@@ -38,14 +41,6 @@ async def scheduled_task():
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
-
-@app.post("/trigger_effects")
-async def trigger():
-    smart_plugs.turn_all_lights_off()
-    smart_plugs.turn_all_lights_on()
-    speakers.play_clue_solved_sound_effect()
-    time.sleep(1)
-    smart_plugs.turn_all_lights_off()
 
 @app.get("/vote_summary/")
 async def get_poll_results(db: Session = Depends(get_db)):
@@ -88,9 +83,26 @@ async def post_vote(vote: schemas.VoteCreate, db: Session = Depends(get_db)):
         vote = crud.create_vote(db, vote)
     else:
         vote = crud.update_vote_detective_id(db, vote.detective_id, vote)
+    results = await get_poll_results(db)
+    await asyncio.gather(
+        *[client.send_json(results) for client in connected_clients]
+    )
     return vote
 
 @app.get("/detective/{detective_code}/vote", response_model=schemas.Vote | None)
 async def get_vote(detective_code: str, db: Session = Depends(get_db)):
     detective = crud.get_detective_by_code(db, code=detective_code)
     return crud.maybe_get_vote_by_detective_id(db, detective_id=detective.id)
+
+@app.websocket("/vote_summary_ws")
+async def websocket_endpoint(websocket: WebSocket):
+    await websocket.accept()
+    connected_clients.append(websocket)
+    try:
+        while True:
+            data = await websocket.receive_json()
+            # Handle incoming JSON messages if needed
+            print(f"Received JSON message: {data}")
+    except WebSocketDisconnect:
+        connected_clients.remove(websocket)
+        print("Client disconnected")

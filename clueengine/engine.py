@@ -3,10 +3,10 @@ from sqlalchemy.orm import Session
 from datetime import datetime
 from clueengine import side_effects
 
-clue_1_release_time = 2200
-clue_2_release_time = 2230
-clue_3_release_time = 2300
-clue_4_release_time = 2330
+clue_1_release_time = 2000
+clue_2_release_time = 2005
+clue_3_release_time = 2010
+clue_4_release_time = 2015
 
 def release_clue_loop(db: Session):
     current_local_time = datetime.now()
@@ -30,6 +30,7 @@ def release_clue(db: Session, clue_id: int):
     db_clue = crud.get_clue(db, clue_id)
     if db_clue.released:
         return
+    result = crud.update_clue(db, clue_id, schemas.ClueCreate(number=db_clue.number, released=True))
     if int(clue_id) == 1:
         side_effects.clue_1_side_effects()
     elif int(clue_id) == 2:
@@ -38,4 +39,4 @@ def release_clue(db: Session, clue_id: int):
         side_effects.clue_3_side_effects()
     elif int(clue_id) == 4:
         side_effects.clue_4_side_effects()
-    return crud.update_clue(db, clue_id, schemas.ClueCreate(number=db_clue.number, released=True))
+    return result
