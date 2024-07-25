@@ -39,7 +39,7 @@ def clue_4_side_effects():
 
 def final_side_effects():
     smart_plugs.turn_all_lights_off()
-    time.sleep(10)
+    time.sleep(5)
     smart_plugs.set_all_lightbulbs_color(constants.magenta.hue, constants.magenta.sat, constants.magenta.bri)
     time.sleep(10)
     setup_default()
