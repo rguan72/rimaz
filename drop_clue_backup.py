@@ -4,7 +4,7 @@ from clueengine import side_effects
 import sys
 
 db = SessionLocal()
-if sys.argv[1] < 5:
+if int(sys.argv[1]) < 5:
     clue_engine.release_clue(db, sys.argv[1])
-elif sys.argv == 5:
+elif int(sys.argv) == 5:
     side_effects.final_side_effects()
