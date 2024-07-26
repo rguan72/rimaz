@@ -49,5 +49,8 @@ load_dotenv()
 # time.sleep(3)
 # smart_plugs.turn_all_smart_plugs_on()
 
-side_effects.final_side_effects()
-
+# side_effects.final_side_effects()
+# side_effects.setup_default()
+# smart_plugs.turn_all_lights_off()
+# speakers.play_mp3("sounds/assets/clue_solved.mp3")
+speakers.play_clue_1_sound_effect()

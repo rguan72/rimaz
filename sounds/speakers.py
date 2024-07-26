@@ -17,7 +17,6 @@ def set_device_by_name(device_name):
             return
 
 def play_mp3(file_path):
-    set_device_by_name("JBL")
     # Load the MP3 file
     audio = AudioSegment.from_file(file_path, format="mp3")
     # Convert to numpy array
@@ -27,8 +26,20 @@ def play_mp3(file_path):
     sd.play(audio_data, audio.frame_rate)
     sd.wait()  # Wait until the file has finished playing
 
-def play_clue_solved_sound_effect():
+def play_voted_sound_effect():
     play_mp3("sounds/assets/clue_solved.mp3")
+
+def play_clue_1_sound_effect():
+    play_mp3("sounds/assets/clue_1.mp3")
+
+def play_clue_2_sound_effect():
+    play_mp3("sounds/assets/clue_2.mp3")
+
+def play_clue_3_sound_effect():
+    play_mp3("sounds/assets/clue_3.mp3")
+
+def play_clue_4_sound_effect():
+    play_mp3("sounds/assets/clue_4.mp3")
 
 # Parameters for the inaudible sound
 duration = 0.5  # seconds

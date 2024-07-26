@@ -24,6 +24,8 @@ app.add_middleware(
     allow_headers=["*"],  # Allows all headers
 )
 
+speakers.set_device_by_name("JBL")
+
 connected_clients = []
 
 def get_db():
