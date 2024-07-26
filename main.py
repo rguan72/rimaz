@@ -88,8 +88,8 @@ async def post_vote(vote: schemas.VoteCreate, db: Session = Depends(get_db)):
 
 @app.get("/detective/{detective_code}/vote", response_model=schemas.Vote | None)
 async def get_vote(detective_code: str, db: Session = Depends(get_db)):
-    detective = crud.get_detective_by_code(db, code=detective_code)
-    return crud.maybe_get_vote_by_detective_id(db, detective_id=detective.id)
+    vote = crud.maybe_get_vote_by_detective_id(db, detective_id=detective_code)
+    return vote
 
 @app.websocket("/vote_summary_ws")
 async def websocket_endpoint(websocket: WebSocket):
