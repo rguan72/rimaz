@@ -37,5 +37,5 @@ def final_side_effects():
     smart_plugs.turn_all_lights_off()
     time.sleep(5)
     smart_plugs.set_all_lightbulbs_color(constants.magenta.hue, constants.magenta.sat, constants.magenta.bri)
-    time.sleep(10)
+    speakers.play_conclusion_sound_effect()
     setup_default()

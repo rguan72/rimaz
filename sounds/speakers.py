@@ -41,6 +41,9 @@ def play_clue_3_sound_effect():
 def play_clue_4_sound_effect():
     play_mp3("sounds/assets/clue_4.mp3")
 
+def play_conclusion_sound_effect():
+    play_mp3("sounds/assets/conclusion.mp3")
+
 # Parameters for the inaudible sound
 duration = 0.5  # seconds
 frequency = 20  # Hz, low-frequency sound
