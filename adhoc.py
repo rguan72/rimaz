@@ -56,5 +56,5 @@ load_dotenv()
 # speakers.play_clue_1_sound_effect()
 # smart_plugs.turn_all_lights_on()
 # side_effects.final_side_effects()
-speakers.play_clue_2_sound_effect()
+speakers.play_clue_4_sound_effect()
 
