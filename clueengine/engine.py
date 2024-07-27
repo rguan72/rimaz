@@ -4,10 +4,10 @@ from datetime import datetime
 from clueengine import side_effects
 
 clue_1_release_time = 2200
-clue_2_release_time = 2230
-clue_3_release_time = 2300
-clue_4_release_time = 2330
-final_reveal_time = 2335
+clue_2_release_time = 2225
+clue_3_release_time = 2250
+clue_4_release_time = 2315
+final_reveal_time = 2330
 
 def release_clue_loop(db: Session):
     current_local_time = datetime.now()
