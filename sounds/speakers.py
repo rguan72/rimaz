@@ -21,6 +21,8 @@ def play_mp3(file_path):
     audio = AudioSegment.from_file(file_path, format="mp3")
     # Convert to numpy array
     audio_data = np.array(audio.get_array_of_samples())
+    if audio.channels > 1:
+        audio_data = audio_data.reshape((-1, audio.channels))
     # Play the audio data
     sd.default.device = "JBL Charge 3"
     sd.play(audio_data, audio.frame_rate)
