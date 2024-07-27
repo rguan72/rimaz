@@ -1,4 +1,4 @@
-bridge_ip = "192.168.1.120"
+bridge_ip = "192.168.1.110"
 username = "VIQYwrlGdWn994WBr-aFQBthKmhpc92zrxYQ6X0s"
 class Color:
     def __init__(self, hue, sat, bri):
